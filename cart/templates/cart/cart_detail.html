@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load product_tags %}
+
+{% block main %}
+
+<section class="inner-page" id="cart-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>سبد خرید</h1>
+                            <p>مدیریت و خرید همزمان چند محصول</p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if cart|length > 0 %}
+                
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12 col-lg-9">
+                            <div id="cart-products">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 py-3">
+                                            <div class="pb-3" id="return-to-shop">می‌خواهید محصولات دیگری اضافه کنید؟ <a href="{% url "product:main" %}">بازگشت به فروشگاه</a></div>
+                                            <div class="d-none d-md-block">
+                                                <div class="row my-2" id="heading">
+                                                    <div class="col-4">
+                                                        <div>کالا</div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div>قیمت واحد</div>
+                                                    </div>
+
+                                                    
+                                                    <div class="col-2 pl-4">
+                                                        <div>تعداد</div>
+                                                    </div>
+
+                                                
+
+                                                    <div class="col-2">
+                                                        <div>رنگ</div>
+                                                    </div>
+
+                                                    
+
+                                                    <div class="col-2 pr-0">
+                                                        <div class="pr-3">قیمت نهایی</div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <!-- Order Product Record -->
+
+                                           
+
+                                            {% for item in cart %}
+
+                                            <div class="row product">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-2 col-md-4 pl-0">
+                                                            <img src="{{item.product.image.url}}" alt="">
+                                                        </div>
+                                                        <div class="col-10 col-md-8">
+                                                            <a href="{% url "product:product_detail" item.product.slug %}" ><div class="title pt-2"> {{item.product.title}} </div></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-2">
+                                                    <div class="d-md-none font-weight-bold">قیمت</div>
+                                                    <div class="pt-1"><span class="product-encode4365gbf265g43d">{{item.product.price|sep_number}}</span> <span>تومان</span></div>
+                                                </div>
+                                                
+                                                <div class="col-6 col-md-2 pl-4 pr-0 pr-md-3">
+                                                    <div class="d-md-none font-weight-bold">تعداد</div>
+                                                    <div class="input-group mb-3 order-number">
+                                                        <p>{{ item.quantity }}</p>
+                                                    </div>
+                                                </div>
+
+                                                
+                                                <div class="col-6 col-md-2">
+                                                    <div class="d-md-none font-weight-bold">رنگ</div>
+                                                    <div class="pt-1"><span class="product-discount">{{item.color}}</span> <span></span></div>
+                                                </div>
+
+                                                <div class="col-6 col-md-2 pr-0">
+                                                    <div class="d-md-none font-weight-bold">قیمت نهایی</div>
+                                                    <div class="pt-1 pr-2 bg-light"><span class="product-total">{{item.total|sep_number}}</span> <span>تومان</span></div>
+                                                    <a href="{% url "cart:cart_delete" item.unique_id %}" class="product-remove btn-remove-from-basket" ><div class="small pl-2"><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg><!-- <i class="fa fa-times"></i> Font Awesome fontawesome.com --> حذف</div></a>
+                                                </div>
+                                            </div>
+
+                                            {% endfor %}
+                                            <hr>
+    
+                                            <div class="row product">
+                                                <div class="col-12">
+                                                    <a href="{% url "cart:cart_clear" %}" class="product-remove btn-remove-from-basket" data-id="all"><div class="float-end small pl-2 font-weight-bold">خالی کردن سبد</div></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if cart|length > 0 %}
+                        <div class="col-12 col-lg-3 mt-2 mt-lg-0 pr-3 pr-lg-0">
+                            <div id="factor">
+                                <div class="container">
+                                    <div class="row py-2">
+                                        <div class="col-6">
+                                            <div>جمع کل فاکتور:</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div><span id="factor-total-encode4365gbf265g43d"> {{ cart.total_price|sep_number }} </span> تومان</div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div class="row py-2" id="total">
+                                        <div class="col-6">
+                                            <div>مبلغ قابل پرداخت:</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div><span id="factor-total">{{ cart.total_price|sep_number }}</span> تومان</div>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        {% if request.user.is_authenticated %}
+                                        <div class="col-12">
+                                            <a href="{% url "cart:order_create" %}"><input type="submit" value="ادامه ثبت سفارش" class="btn btn-success w-100"></a>
+                                        </div>
+                                        {% else %}
+                                        <div class="col-12">
+                                            <a class="btn btn-success" href="{% url "accounts:login" %}">جهت ادامه وارد سایت شوید</a>
+                                        </div>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                {% else %}
+
+                <a class="btn btn-danger text-center w-100  btn-success my-3" href="{% url "product:main" %}"> &#128542; سبد خرید خالی است</a>
+
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock main %}

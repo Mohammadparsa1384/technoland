@@ -1,0 +1,20 @@
+{% load static %}
+{% load product_tags %}
+<head>
+    <title>وضعیت خرید</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.rtl.min.css" %}">
+</head>
+<ul class="container mt-3">
+    <h2 style="padding:10px;" class="text text-center bg-success fs-2 text-white my-3">پرداخت با موفقیت انجام شد</h2>
+    {% for ord in order.items.all %}
+
+    <li style="list-style-type: none; padding:10px" class="text text-center bg-warning fs-2 text-white my-3">{{ ord.product.title }}</li>
+    <img width="30%" src="{{ord.product.image.url}}" alt=""><br><br>
+    {% endfor %}
+    <li style="list-style-type: none; padding:10px" class="text text-center bg-warning fs-2 text-white my-3">قیمت کل : {{ order.total_price|sep_number }}</li>
+
+    
+    
+    
+    <a class="btn btn-primary w-100" href="{% url "product:main" %}">بازگشت به صفحه اصلی</a>
+</ul>
