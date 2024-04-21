@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load product_tags %}
+{% load static %}
+
+{% block main %}
+
+<section class="inner-page" id="products-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>تکنولند</h1>
+                            <p>هر آنچه نیاز دارید در این فروشگاه موجود است</p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">محصولات</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 px-3 px-lg-0">
+                            <!-- Side Panel -->
+                            <form>
+                            <div class="accordion filters-container">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            گروه های محصولات
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+
+                                            {% for cat in categories %}
+                                            <div class="form-group">
+                                                <input name="category" value={{ cat.title }} type="checkbox" id="category1">
+                                                <label for="category1">{{ cat.title }}</label>
+                                            </div>
+                                            {% endfor %}
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                            <div class="accordion filters-container mt-3">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                            محدوده قیمت
+                                        </button>
+                                    </h2>
+
+                                    
+
+                                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                
+                                                <div class="col-6 text-center encode4365gbf265g43d-range mt-3">
+                                                    <div>از</div>
+                                                    <input type="number" class="min_price" style=" width: 90%;" name="min_price" id="encode4365gbf265g43d-range-from"></input>
+                                                    <div>تومان</div>
+                                                </div>
+                                                <div class="col-6 text-center encode4365gbf265g43d-range mt-3">
+                                                    <div>تا</div>
+                                                    <input type="number" class="max_price" style="width: 90%;" name="max_price" id="encode4365gbf265g43d-range-to">
+                                                    <div>تومان</div>
+                                                </div>
+                                                <div class="col-12 text-center py-2">
+                                                    <input value="اعمال فیلتر" type="submit" class="btn btn-warning">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                </div>
+                            </div>
+
+                            <div class="accordion filters-container mt-3">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <button class="accordion-button py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                            جدیدترین محصولات
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                
+                                                {% for product in recent_prods %}
+
+                                                <!-- Side Product -->
+
+                                                <div class="col-12 col-md-4 col-lg-12 px-0 mt-2">
+                                                    <a href="{{product.get_absolute_url}}">
+                                                        <div class="side-product">
+                                                            <div class="row pl-3">
+                                                                <div class="col-3 pl-2">
+                                                                    <div class="image" style="background-image: url('{{ product.image.url }}')"></div>
+                                                                </div>
+                                                                <div class="col-9 pr-0">
+                                                                    <h2>{{ product.title }}</h2>
+                                                                    <div class="row">
+                                                                        <div class="col-7 pl-0">
+                                                                            <span class="encode4365gbf265g43d">{{ product.price|sep_number }} تومان</span>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                
+                                                <!-- Side Product -->
+
+                                                {% endfor %}
+                                                
+
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Side Panel -->
+                        </div>
+
+                        <div class="col-12 col-lg-9 px-0 pl-lg-0 pr-lg-2 mt-2 mt-lg-0">
+                            
+                            <div class="mt-2" id="pager">
+                                <div class="container">
+                                    <div class="row row-cols-1 gx-md-4">
+                                        <!-- Products -->
+                                        {% for product in products %}
+                                        <div class="col">
+                                            <!-- Product Box -->
+                                            <div class="encode4326654321vfb-row">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-4">
+                                                        <a href="{% url "product:product_detail" product.slug %}"><div class="image" style="background-image: url('{{ product.image.url }}')"></div></a>
+                                                    </div>
+                                                    <div class="col-12 col-md-8">
+                                                        <div class="details py-3 px-3">
+                                                            <div class="category">
+                                                                <a href="{% url "product:product_detail" product.slug %}">{{ product.title }}</a>
+                                                                &nbsp;/&nbsp;
+                                                                <a href="{% url "product:product_detail" product.slug %}">{{product.category.first}}</a>
+                                                            </div>
+                                                            <a href="{% url "product:product_detail" product.slug %}"><h2>{{ product.description }}</h2></a>
+                                                            
+                                                            <p> {{ product.description }} </p>
+                                                            <div class="encode4365gbf265g43d mb-2">{{ product.price|sep_number }} تومان</div>
+                                                            <a href="{% url "product:product_detail" product.slug %}"><div class="btn btn-sm btn-success">مشاهده و خرید</div></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /Product Box -->
+                                        </div>
+                                        {% endfor %}
+                                        
+
+                                        <!-- /Products -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        
+                                        <div id="pagination-bg">
+                                            <ul class="pagination justify-content-center pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+    
+
+</script>
+{% endblock main %}
