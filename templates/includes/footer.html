@@ -1,0 +1,68 @@
+{% load static %}
+<!-- Footer -->
+<section class="pt-4 pb-3" id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="title">دسترسی سریع</div>
+                <ul>
+                    
+                    
+                    <li><a href="{% url "product:about_us" %}">درباره ما</a></li>
+                    <li><a href="{% url "product:contactus" %}">تماس با ما</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="title">گروه های محصولات</div>
+                <ul>
+                    {% for category in categories %}
+
+                    <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                    
+                    {% endfor %}
+                    
+                </ul>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2 d-none d-sm-inline-block">
+                <div class="title">ناحیه کاربری</div>
+                <ul>
+                    {% if not request.user.is_authenticated %}
+                    <li><a href="{% url "accounts:login" %}">ورود به سایت</a></li>
+                    <li><a href="{% url "accounts:register" %}">عضویت در سایت</a></li>
+                    {% else %}
+                    <li><a href="{% url "accounts:password_change" %}">تغییر رمز عبور</a></li>
+                    {% endif %}
+                    
+                    <li><a href="{% url "cart:cart_detail" %}">سبد خرید</a></li>
+                    
+                </ul>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6">
+                <hr class="d-lg-none">
+                <img src="assets/images/logo.png" alt=""> تکنولند
+                <p>بدرود! اینجا "تکنو لند"، منصفانه‌ترین مقصد برای افرادی که به دنبال جدیدترین و بهترین تکنولوژی‌ها و گجت‌ها هستند. ما در "تکنو لند" به دنبال آن چیزهایی هستیم که زندگی شما را بهبود می‌بخشد و باعث می‌شود از تکنولوژی بهترین استفاده را ببرید. </p>
+                <div class="row">
+                    <div class="col-12 col-md-6 text-center p-2" id="encode43vfbb65gtabfb">
+                        <div>7 روز هفته، 24 ساعت شبانه روز</div>
+                        <div>پاسخگوی شما هستیم</div>
+                        <div>09351234567</div>
+                    </div>
+                    <div class="col-12 col-md-6 pt-2 pt-md-0" id="encode43vfbbbfb">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <a href="#"><img src="{% static "images/encode43vfbbbfb/enamad.html" %}" alt=""></a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#"><img src="{% static "images/encode43vfbbbfb/samandehi.html" %}" alt=""></a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#"><img src="{% static "images/encode43vfbbbfb/etehadiye.html" %}" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Footer -->
