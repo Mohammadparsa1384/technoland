@@ -26,13 +26,19 @@ These instructions will help you set up the project on your local machine for de
 
 ### Installation Steps
 ```bash
-git clone https://github.com/yourusername/django-ecommerce.git
-cd django-ecommerce
+git clone [https://github.com/yourusername/django-ecommerce.git]
+cd technoland
+```
+### Create venv
+```bash
 python -m venv venv
 `venv\Scripts\activate`
+```
+### Install requirements and start project
+```bash
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
-
+```
    
