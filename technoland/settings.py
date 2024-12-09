@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'assets'
 ]
 
-MERCHANT = "6e5e634b-8b4b-406c-aadb-6b10bdc8e315"
+MERCHANT = "Your Merchant id from your Payment Gateway"
 SANDBOX = False
 
 # Default primary key field type
