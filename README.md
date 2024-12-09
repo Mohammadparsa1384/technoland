@@ -12,7 +12,7 @@ This project is a simple e-commerce store built with Django, featuring product m
 - **Admin Panel**: Manage products, orders, and users through Django’s built-in admin panel.
 - **Responsive Design**: Mobile-friendly layout.
 - **Merchant ID**: Set your Merchant ID in **settings.py**.
-- 
+
 
 ## Tech Stack
 
