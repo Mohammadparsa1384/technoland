@@ -29,7 +29,7 @@ These instructions will help you set up the project on your local machine for de
 
 ### Installation Steps
 ```bash
-git clone [https://github.com/yourusername/django-ecommerce.git]
+git clone [https://github.com/Mohammadparsa1384/technoland-store.git]
 cd technoland
 ```
 ### Create venv
