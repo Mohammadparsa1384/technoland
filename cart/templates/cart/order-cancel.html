@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<section class="inner-page" id="contact-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>لغو سفارش</h1>
+                            
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">خطای 404</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg p-4 text-center">
+                    <div class="card-body">
+                        <div class="notfound-icon mb-4">
+                            <div style="width: 50px; height: 50px; background-color: #f8d7da; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-times text-danger" style="font-size: 24px;"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-danger mb-3">لغو سفارش</h3>
+                        <h2 class="text-muted text-danger">سفارش شما با موفقیت لغو شد</h2>
+                        <p class="text-muted mb-4">اگر سوالی دارید، لطفاً با پشتیبانی تماس بگیرید.</p>
+                        <a href="{% url 'product:main' %}" class="btn btn-primary btn-lg">بازگشت به صفحه اصلی</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</section>
+
+{% endblock main %}

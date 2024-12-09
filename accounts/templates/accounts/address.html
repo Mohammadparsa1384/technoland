@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load static %}
+{% load product_tags %}
+{% block main %}
+
+<section class="inner-page" id="profile-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>ناحیه کاربری</h1>
+                            <p>به ناحیه کاربری تکنولند خوش آمدید.</p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item"><a href="#">ناحیه کاربری</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">آدرس های من</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <!-- Side Panel -->
+                            <div class="accordion" id="side-panel">
+                                <div class="accordion-item menu-container">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                            <span class="row">
+                                                <span class="col-3 col-sm-2 col-lg-3">
+                                                    {% if request.user.profile.image %}
+                                                    <img src="{{request.user.profile.image.url}}" class="rounded-circle">
+
+                                                    {% else %}
+
+                                                    <img src="{% static "images/user-no-image.jpg" %}" class="rounded-circle">
+
+
+                                                    {% endif %}
+
+                                                    
+                                                </span>
+                                                <span class="col-7 col-sm-8 col-lg-7 pt-0 pt-sm-2 pt-md-3 pt-lg-0 align-self-center">
+                                                    <div style="paddin" id="full-name">{{ request.user.email|sep_email }}</div>
+                                                    
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                        <div class="accordion-body">
+                                            <ul>
+                                                <li>
+                                                    <a href="personal-info.html" class="active">
+                                                        <div>
+                                                            <div class="icon d-inline-block"><img src="{% static "images/icons/profile-menu/profile.webp" %}" class="pl-2"></div> اطلاعات حساب
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="{% url "cart:cart_detail" %}">
+                                                        <div>
+                                                            <div class="icon d-inline-block"><img src="{% static "images/icons/profile-menu/orders.webp" %}" class="pl-2"></div>  سبد خرید
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <a href="{% url "accounts:user-orders" %}">
+                                                        <div>
+                                                            <div class="icon d-inline-block"><img src="{% static "images/icons/profile-menu/orders.webp" %}" class="pl-2"></div>  سفارشات
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#">
+                                                        <div>
+                                                            <div class="icon d-inline-block"><img src="{% static "images/icons/profile-menu/addresses.webp" %}" class="pl-2"></div> آدرس های من
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li><hr></li>
+                                                <li>
+                                                    <a href="{% url "accounts:logout" %}">
+                                                        <div>
+                                                            <div class="icon d-inline-block"><img src="{% static "images/icons/profile-menu/exit.webp" %}" class="pl-2"></div> خروج از حساب
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Side Panel -->
+                        </div>
+                        <div class="col-12 col-lg-9 pl-lg-0 pr-lg-2 mt-2 mt-lg-0">
+                            <!-- New Address Form -->
+                            {% if not request.user.profile.image%}
+                            <p>{{ request.user.profile }}</p>
+                            <form action="{% url "accounts:add_user_profile" %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <p>تنظیم عکس پروفایل</p>
+                                <input required name="profile" class="form-control" value="تنظیم عکس پروفایل" type="file"><br>
+                                <input value="تنظیم عکس" class="btn btn-primary" type="submit">
+                            </form> <br>
+                            
+                            {% else %}
+
+                            
+                            <a class="btn btn-danger text-white" href="{% url "accounts:del_user_profile" request.user.profile.id %}">حذف  عکس پروفایل</a><br><br>
+
+                            {% endif %}
+                            
+                            
+                            <div class="custom-container mb-2" id="new-address">
+                                <div class="row pt-2 px-3">
+                                    <div class="col-12"><h1>افزودن آدرس جدید</h1></div>
+                                </div>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 pt-3">
+                                            <form method="post">
+
+                                                {% csrf_token %}
+
+                                                {{form.errors}}
+                                            <div class="row">
+                                                {% if request.user.addresses.all.count > 2 %}
+                                                <script>alert("شما حداکثر 3 آدرس میتوانید اضافه کنید")</script>
+
+                                                {% endif %}
+                                                <div class="col-12 col-md-4 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="province">استان:</label>
+                                                        {{form.province}}
+                                                        
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="col-12 col-md-4 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="city">شهر:</label>
+                                                
+                                                        {{form.city}}
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-8 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="address">نشانی کامل:</label>
+                                                        {{form.address}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="zip_code">کد پستی:</label>
+                                                        {{form.zip_code}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="receiver">تحویل گیرنده:</label>
+                                                        {{form.receiver}}
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4 pl-2">
+                                                    <div class="form-group m-1">
+                                                        <label for="tel">تلفن تماس:</label>
+                                                        {{form.phone}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group m-1 pb-3">
+                                                        <input type="submit" class="btn btn-primary px-5" value="ذخیره آدرس">
+                                                    </div>
+                                                    
+                                                </div>
+                                                {{form.errors}}
+                                            </div>
+
+                                        </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /New Address Form -->
+
+                            <!-- User Addresses -->
+                            <div class="custom-container" id="addresses">
+                                <div class="row pt-2 px-3">
+                                    <div class="col-12"><h1>آدرس های من</h1></div>
+                                </div>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        {% for address in request.user.addresses.all %}
+                                        <div class="col-12 address py-2">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-10">
+                                                    <div class="title">آدرس: {{ address.address }}</div>
+                                                    <div class="sub-title">شهر: {{ address.city }}</div>
+                                                    <div class="sub-title">کدپستی : {{ address.zip_code }}</div>
+                                                    <div class="sub-title">تحویل گیرنده : {{ address.receiver }}</div>
+                                                    <div class="sub-title">شماره تلفن : {{ address.phone }}</div>
+                                                </div>
+
+                                                <div class="col-12 col-sm-2 text-lg-end">
+                                                    <a href="{% url "accounts:del_add" address.id %}" onclick="return confirm('آیا جهت حذف این آدرس اطمینان دارید؟')" class="float-right float-sm-left pr-2 pl-sm-2"><i class="fa fa-trash-alt font-weight-normal"></i></a>
+                                                    
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /User Addresses -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock main %}

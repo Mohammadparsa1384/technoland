@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- /Header -->
+
+{% block main %}
+
+<section class="inner-page" id="contact-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>ورود به ناحیه کاربری</h1>
+                            <p>وارد ناحیه کاربری خود در تکنولند شوید.</p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">ورود</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-2 py-md-5">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="content">
+                    <form method="post">
+                    {% csrf_token %}
+                        
+                    <div class="row">
+
+                        {% if form.errors %}
+                        <p> {{form.errors}}</p>
+                        {% endif %}
+
+                        <div class="col-12 col-lg-5 text-center">
+                            <img src="{% static "images/login.png" %}" alt="">
+                        </div>
+                        <div class="col-12 col-lg-7 pt-5 pt-md-0 align-self-center">
+                            <div class="title">وارد شوید</div>
+                            <p>با عضویت در سایت از همه امکانات سایت بهره مند شوید.</p>
+                            <div class="form-group">
+                                <label for="email">پست الکترونیک :</label>
+                                {{form.email}}
+                            </div>
+
+                            
+                            <div class="form-group">
+                                <label for="password">رمز عبور :</label>
+                                {{form.password}}
+                            </div>
+                            <div class="form-group">
+                                <a class="text text-danger" href="{% url "password_reset" %}">رمز عبور خود را فراموش کرده اید؟ </a>
+                               
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" value="ورود به ناحیه کاربری" class="btn btn-success">ورود به ناحیه کاربری</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock main %}
+

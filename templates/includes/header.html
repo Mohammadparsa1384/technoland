@@ -1,0 +1,142 @@
+{% load static %}
+{% load product_tags %}
+<!-- Header -->
+<section id="header">
+    <!-- Top NavBar -->
+    <div id="encode4325436">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 d-none d-md-block">
+                    <ul>
+                        <li><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                        <li><a href="{% url "product:about_us" %}">درباره ما</a></li>
+                        <li><a href="{% url "product:contactus" %}">تماس با ما</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end" id="top-encode43vfbb65gtabfb">
+                    <span>تلفن مشاوره و فروش: 09351234567</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Top NavBar -->
+    <!-- Search NavBar -->
+    <div id="encode43254bvfb">
+        <div class="container pt-1">
+            <div class="row py-3 align-content-center">
+                <div class="col-12 col-md-3 col-xl-2 text-center text-md-start pb-2" id="encode4326523bvfb">
+                    <a href="#">
+                        <img src="{% static "images/logo.png" %}" alt=""> تکنولند
+                    </a>
+                </div>
+
+                <div class="col-12 col-md-5 col-xl-6 mb-2">
+                <form action="{% url "product:search_product" %}">
+                    <div id="search-bar">
+                        <i class="fa fa-search"></i>
+                        <input name="title_product" type="text" placeholder="جستجو کنید...">
+                    </div>
+
+                </form>
+
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="row">
+                        <div class="col-12 col-md-7 col-lg-6 text-center" id="btn-login-register">
+                            {% if not request.user.is_authenticated %}
+                            <a href="{% url "accounts:login" %}">ورود</a> /
+                            <a href="{% url "accounts:register" %}">عضویت</a>
+                            {% endif %}
+                            
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-6">
+                            <a href="{% url "cart:cart_detail" %}">
+
+                                <div class="btn btn-warning w-100"><i class="fa fa-shopping-cart"></i>&nbsp;<span id="item_count" class="d-md-none d-lg-inline-block">سبد خرید</span> {{cart|length}} </div>
+                                
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Search NavBar -->
+    <!-- Main NavBar -->
+    <div id="main-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="droopmenu-navbar dmarrow-down droopmenu-horizontal dmpos-top dmfade">
+                        <div class="droopmenu-inner">
+                            <div class="droopmenu-header">
+                                <a href="#" class="droopmenu-toggle"><i class="dm-burg"></i></a>
+                                <span class="d-md-none">منوی فروشگاه</span>
+                            </div>
+                            <!-- Header Mega Menu-->
+                            <div class="droopmenu-nav">
+                                <div class="droopmenu-nav-wrap">
+                                    <div class="droopmenu-navi">
+                                        <ul class="droopmenu">
+                                            <li class="droopmenu-parent" aria-haspopup="true">
+                                                <a href="#" aria-expanded="false"><i class="fa fa-bars"></i>&nbsp;&nbsp;گروه های محصولات<em class="droopmenu-topanim"></em></a><div class="dm-arrow"></div>
+                                                <ul style="">
+                                                    <li><a href="{% url "product:filter" %}">فیلتر محصولات</a></li>
+                                                    {% for category in  categories%}
+                                                    <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                                                    {% endfor %}
+                                                    
+                                                </ul>
+                                            </li>
+                                            <li><a href="{% url "product:about_us" %}">درباره ما<em class="droopmenu-topanim"></em></a></li>
+                                            
+                                            <li class="droopmenu-parent" aria-haspopup="true">
+                                                <a href="{% url "product:contactus" %}" aria-expanded="false">تماس با فروشگاه<em class="droopmenu-topanim"></em></a><div class="dm-arrow"></div>
+                                                <ul style="">
+                                                    
+                                                    <li><a href="{% url "product:contactus" %}">تماس با ما</a></li>
+                                                </ul>
+                                            </li>
+                                            
+                                            <li class="droopmenu-parent" aria-haspopup="true">
+                                                
+                                                <ul style="">
+                                                    
+                                                    <li><a href="{% url "cart:cart_detail" %}">سبد خرید</a></li>
+                                                    
+                                                    <li class="dm-bottom-separator"></li>
+                                                    
+                                                    <li class="dm-bottom-separator"></li>
+                                                </ul>
+                                            </li>
+                                            <li class="droopmenu-parent" aria-haspopup="true">
+                                                <a href="#" aria-expanded="false">پروفایل کاربری<em class="droopmenu-topanim"></em></a><div class="dm-arrow"></div>
+                                                <ul style="">
+                                                    {% if request.user.is_authenticated %}
+                                                    
+                                                    <li><a href="{% url "cart:cart_detail" %}">سبد خرید</a></li>
+                                                    <li><a href="{% url "accounts:address" %}"> پروفایل کاربری </a></li>
+                                                    <li><a href="{% url "accounts:password_change" %}">تغییر رمز عبور</a></li>
+                                                    <li><a href="#">{{request.user.email|sep_email}} </a></li>
+                                                    <li><a href="{% url "accounts:logout" %}"> خروج از حساب </a></li>
+                                                    {% else %}
+                                                    <li><a href="{% url "accounts:login" %}"> ورود </a></li>
+                                                    <li><a href="{% url "accounts:register" %}"> ثبت نام </a></li>
+                                                    {% endif %}
+                                                    
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Header Menu Menu -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main NavBar -->
+</section>
+<!-- /Header -->

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block main %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">سفارش‌های من</h2>
+    
+    {% if orders %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">شماره سفارش</th>
+                        <th scope="col">تاریخ</th>
+                        <th scope="col">وضعیت پرداخت</th>
+                        <th scope="col">قیمت کل</th>
+                        <th scope="col">محصولات</th>
+                        <th scope="col">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            {% if order.is_paid %}
+                                <span class="badge bg-success">پرداخت شده</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">در انتظار پرداخت</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ order.total_price|intcomma:False }} تومان</td>
+                        <td>
+                            <ul class="list-group">
+                                {% for item in order.items.all %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ item.product.title }}
+                                        <span class="badge bg-primary rounded-pill">
+                                            {{ item.quantity }} عدد
+                                        </span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            {% if not order.is_paid %}
+                                <form action="{% url 'accounts:order_delete' order.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="حذف سفارش">
+                                        <i class="bi bi-x-circle"></i> حذف
+                                    </button>
+                                </form>
+                                {% else %}
+                                <span class="badge bg-success">پرداخت شده</span>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            شما هیچ سفارشی ندارید.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

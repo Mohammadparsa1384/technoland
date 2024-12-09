@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+<section class="inner-page" id="contact-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1>تماس با ما</h1>
+                            <p>با ما در ارتباط باشید.</p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">تماس با ما</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content p-0 p-sm-3">
+                    <div class="row">
+                        <div class="col-12 col-lg-5 text-center" id="contact-page-info">
+                            <div class="info">
+                                <i class="fa fa-map-marked"></i>
+                                <div class="title">آدرس فروشگاه:</div>
+                                <div>ایران، تهران، جردن</div>
+                            </div>
+                            <div class="info">
+                                <i class="fa fa-phone"></i>
+                                <div class="title">تلفن تماس:</div>
+                                <div>02112345678</div>
+                                <div>09351234567</div>
+                            </div>
+                            <div class="info">
+                                <i class="fa fa-envelope"></i>
+                                <div class="title">پست الکترونیک:</div>
+                                <div>email@website.com</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-7 p-4">
+                            <div class="title">ارسال پیام</div>
+                            <p>نظرات، پیشنهادات و انتقادات سازنده خود را از طریق فرم زیر با ما در میان بگذارید. ما در این فروشگاه اینترنتی همواره برای بهبود خدمات خود در تلاش هستیم.</p>
+                            <form method="post">
+
+                            {% csrf_token %}
+
+                            
+                            
+                            <div class="form-group">
+                                <label for="subject">موضوع پیام :</label>
+                                {{form.subject}}
+                            </div>
+                            <div class="form-group">
+                                <label for="message">متن پیام :</label>
+                                {{form.message}}
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="ارسال پیام" class="btn btn-success">
+                            </div>
+                        </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}

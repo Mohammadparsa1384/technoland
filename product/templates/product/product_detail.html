@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% load jformat %}
+{% load static %}
+{% load product_tags %}
+{% block main %}
+
+<section class="inner-page" id="product-page">
+    <div class="container-fluid" id="page-hero">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+
+                <form method="post" action="{% url "cart:cart_add" product.id %}"> 
+                {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <h1> {{product.title}} </h1>
+                            <p> {{product.description}} </p>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url "product:main" %}">صفحه نخست</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url "product:filter" %}">فیلتر محصولات</a></li>
+                                    
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12 col-lg-5 px-lg-0">
+                            <div class="swiper-container gallery-top">
+                                <!-- Additional required wrapper -->
+                                <ul class="swiper-wrapper">
+                                    <!-- Slides -->
+                                    <li id="1" class="swiper-slide">
+                                        <a href="{{ product.image.url }}" itemprop="contentUrl" data-size="900x710">
+                                            <img src="{{ product.image.url }}" itemprop="thumbnail" alt="گوشی موبایل سامسونگ مدل Galaxy A21s" />
+                                        </a>
+                                    </li>
+              
+                                </ul>
+                                
+                            </div>
+   
+                        </div>
+                        <div class="col-12 col-lg-7 mt-5 mt-lg-0 pl-lg-0" id="product-intro">
+                            <a href="product.html">
+                                <h1> {{product.title}} </h1>
+                            </a>
+                            <div class="stars-container">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <a href="#tabs-panel"><span>(نقد و بررسی)</span></a>
+                            </div>
+                            <div class="encode4365gbf265g43d-container py-2">
+                                
+                                <span id="current-product-price" class="encode4365gbf265g43d"> {{ product.price|sep_number }} <span>تومان</span></span>
+                                <div class="badge badge-danger font-weight-light m-1 py-1 px-2">{{ product.discount }}%</div>
+                            </div>
+                            <p>{{product.description}}</p>
+                            <hr>
+
+                            
+
+                            <div class="variables">
+                                <div class="title">گزینه های موجود:</div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-4 col-lg-3">
+                                        <div class="variable">
+                                            <div class="sub-title pt-2 pb-3">رنگ</div>
+
+                                            {% for color in product.colors.all  %}
+
+                                            <div class="color-container">
+                                                <input value="{{color.title}}" id="colors" type="radio" name="color" class="color-variable">{{color.title}}</input>
+                                            </div>
+
+                                            {% endfor %}
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4 col-lg-3">
+                                        <div class="variable">
+                                            <div class="sub-title pt-2 pb-2">تعداد</div>
+                                            
+                                            <input name="quantity"  type="number" min="1" max="10" class="form-control" value="{{product.quantity}}">
+                                                 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cta-container pt-3 pt-md-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        
+                                            <button  type="submit" class="btn btn-success px-4 px-lg-2 px-xl-4 btn-add-to-basket add-to-cart-btn"><i class="fa fa-shopping-cart"></i> افزودن به سبد خرید</button>
+                                        
+                                        <br class="d-sm-none">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                        <!-- Nav Tabs -->
+                            <div class="col-12">
+                                <div id="product-nav-tabs">
+                                    <div class="row pt-3 px-md-3">
+                                        <div class="col-12">
+                                            <div id="tabs-panel">
+                                                <button class="tab-item tablink px-3" onclick="openTab(event,'comments-tab')">دیدگاه کاربران ({{ product.comments.all.count }})</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12 pt-2 px-0 px-lg-0">
+
+                                                <!-- Comments Tab -->
+                                                <div id="comments-tab" class="tabs-container px-0 px-md-3 pb-0 pb-md-2">
+                                                    <div class="row">
+                                                        <div class="col-12 text-justify" id="comments">
+                                                            <div class="comments-container">
+                                                                <div class="container px-0">
+                                                                    <div class="row">
+                                                                        <div class="col-12 pt-2">
+                                                                            <!-- Show Comments -->
+                                                                            
+                                                                            {% if product.comments.all.count > 0 %}
+                                                                            
+                                                                            <div class="comment p-3 my-2">
+                                                                                {% for comment in product.comments.all %}
+                                                                                {% if comment.parent_id == None %}
+                                                                                <div class="sender-details">
+                                                                                    <div class="row">
+                                                                                        <div class="col-3 col-sm-2 col-md-1 pl-md-0 pl-lg-2 pl-xl-3">
+                                                                                            {% if comment.author.profile.image.url %}
+
+                                                                                            <img src="{{ comment.author.profile.image.url }}" alt="" class="rounded">
+                                                                                            {% else %}
+                                                                                            <img src="{% static "images/user-no-image.jpg" %}" alt="" class="rounded">
+                                                                                            {% endif %}
+                                                                                        </div>
+                                                                                        <div class="col-9 col-sm-10 col-md-11 pr-0 pr-md-2 pr-xl-0 pt-0 pt-lg-1">
+                                                                                            <div class="name"> {{ comment.author.email|slice:":2" }}</div>
+                                                                                            <div class="date">ارسال شده در {{ comment.updated|jformat:"%Y/%m/%d"}}</div>
+                                                                                        </div>
+                                                                                        <div class="col-12">
+                                                                                            <p>{{ comment.body }}</p>
+                                                                                            <span onclick="set_id({{comment.id}})" class="reply"><img src="{% static "images/comment-reply.png" %}" alt=""> ارسال پاسخ</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                {% endif %}
+
+                                                                                {% for reply in comment.replies.all %}
+                                                                                
+                                                                                <!-- Comment Reply -->
+                                                                                <div class="row justify-content-end">
+                                                                                    <div class="col-11 pt-2 pr-0">
+                                                                                        <div class="comment p-3">
+                                                                                            <div class="sender-details">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-3 col-sm-2 col-md-1 pl-md-0 pl-lg-2 pl-xl-3">
+
+                                                                                                        {% if reply.author.profile.image %}
+
+                                                                                                        <img src="{{ reply.author.profile.image.url }}">
+                                                                                                        {% else %}
+                                                                                                        <img src="{% static "images/user-no-image.jpg" %}">
+                                                                                                        {% endif %}
+                                                                                                    </div>
+                                                                                                    <div class="col-9 col-sm-10 col-md-11 pr-0 pr-md-2 pr-xl-0 pt-0 pt-lg-1">
+                                                                                                        <div class="name mx-0"> {{ reply.author.email|slice:":2" }}</div>
+                                                                                                        <div class="date">ارسال شده در {{ reply.updated|jformat:"%Y/%m/%d" }}</div>
+                                                                                                    </div>
+                                                                                                    <div class="col-12">
+                                                                                                        <p>{{ reply.body }}</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- /Comment Reply -->
+
+                                                                                {% endfor %}
+
+                                                                                {% endfor %}
+           
+
+                                                                                
+                                                                            </div>
+                                                                            <!-- /Show Comments -->
+                                                                            {% else %}
+                                                                            <p class="text fs-4 text-center">کامنتی درج نشده است</p>
+                                                                            {% endif %}
+
+                                                                            
+                                                                            
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {% if request.user.is_authenticated %}
+                                                            <!-- Send Comment Form -->
+                                                            <div class="comments-container">
+                                                                <div class="row pt-4">
+                                                                    <div class="col-12"><h2>دیدگاه خود را ارسال کنید</h2></div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 py-3">
+
+                                                                        <form method="post">
+                                                                            {% csrf_token %}
+                                                                            <div id="send-comment-form">
+                                                                                
+                                                                                <div class="row">
+                                                                                    <div class="col-12 px-3 pl-md-1 col-md-6">
+                                                                                        
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group my-1">
+                                                                                            
+                                                                                            <input class="parent_id" type="hidden" name="parent_id">
+                                                                                            <textarea name="body" class="form-control" id="body" rows="4" placeholder="متن دیدگاه" required></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group my-1">
+                                                                                            <input type="submit" value="ارسال دیدگاه" class="btn btn-success px-5">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /Send Comment Form -->
+                                                            {% else %}
+                                                            <a class="btn w-100 btn-center btn-primary" href="{% url "accounts:login"%}?next={% url "product:product_detail" product.slug %}">جهت ارسال کامنت وارد سایت شوید</a>
+
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /Comments Tab -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Nav Tabs -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function set_id(id){
+
+        let reply = document.querySelector(".reply")
+        let textBox = document.getElementById("body")
+        let parent_id = document.querySelector(".parent_id")
+        parent_id.value = id
+        textBox.placeholder = "پاسخ خود را وارد کنید"
+    }
+</script>
+
+{% endblock main %}
