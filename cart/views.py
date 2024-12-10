@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render ,get_object_or_404
 from django.core.mail import send_mail
+from django.contrib import messages
 from django.views.generic import View
 import requests
 import json
@@ -21,6 +22,9 @@ class CartAddView(View):
 
         color = request.POST.get("color","empty")
         quantity = request.POST.get("quantity")
+        
+        if color == "empty":
+            messages.error(request, "لطفا یک رنگ را انتخاب کنید")
         
         cart = Cart(request)
         
