@@ -1959,3 +1959,20 @@ input[class="max_price"]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+  /* background-color: blue; */
+  cursor: pointer;
+  float: left;
+}
+.alert {
+  padding: 15px;
+  position: relative;
+  /* margin-bottom: 10px; */
+  border-radius: 4px;
+  border: 1px solid transparent;
+}

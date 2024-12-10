@@ -4,6 +4,21 @@
 {% load product_tags %}
 {% block main %}
 
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert_container">
+            <div class="alert alert-danger alert-{{ message.tags }} my-2" id="custom-alert">
+                {{ message }}
+                <button type="button" id="btn_close" onclick="closeAlert()" class="btn-close pt-0" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+            </div>
+            
+        </div>
+        
+    {% endfor %}
+</div>
+{% endif %}
+
 <section class="inner-page" id="product-page">
     <div class="container-fluid" id="page-hero">
         <div class="row">
@@ -289,6 +304,12 @@
         let parent_id = document.querySelector(".parent_id")
         parent_id.value = id
         textBox.placeholder = "پاسخ خود را وارد کنید"
+    }
+
+    function closeAlert() {
+        document.getElementById("custom-alert").style.display = "none";
+        document.getElementById("btn_close").style.display = "none";
+
     }
 </script>
 
