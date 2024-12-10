@@ -97,13 +97,18 @@
                                         <div class="variable">
                                             <div class="sub-title pt-2 pb-3">رنگ</div>
 
-                                            {% for color in product.colors.all  %}
-
-                                            <div class="color-container">
-                                                <input value="{{color.title}}" id="colors" type="radio" name="color" class="color-variable">{{color.title}}</input>
-                                            </div>
-
-                                            {% endfor %}
+                                            {% for color in product.colors.all %}
+            <div class="color-container">
+                <input 
+                    value="{{ color.title }}" 
+                    id="color_{{ color.id }}" 
+                    type="radio" 
+                    name="color" 
+                    class="color-variable"
+                    {% if selected_color == color.title %}checked{% endif %}>
+                {{ color.title }}
+            </div>
+        {% endfor %}
                                             
                                         </div>
                                     </div>

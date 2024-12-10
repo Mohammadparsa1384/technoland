@@ -13,6 +13,8 @@ class Cart:
         
         self.cart = cart
     
+    
+    
     def unique_id_generator(self,id,color):
         result = f'{id}-{color}'
         return result
@@ -42,7 +44,10 @@ class Cart:
         if id in self.cart:
             del self.cart[id]
             self.save()
-    
+
+        if "selected_color" in self.session:
+            del self.session['selected_color']
+        
     def __iter__(self):
         cart = self.cart.copy()
         
@@ -60,6 +65,10 @@ class Cart:
     def clear(self):
         del self.session[CART_SESSION_ID]
         self.save()
+        
+        if "selected_color" in self.session:
+            del self.session['selected_color']
+        
     
     def total_price(self):
         cart = self.cart.values()

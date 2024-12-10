@@ -21,13 +21,13 @@ class CartAddView(View):
         product  = get_object_or_404(Product,id=id)
 
         color = request.POST.get("color","empty")
-        quantity = request.POST.get("quantity")
+        quantity = request.POST.get("quantity", 1)
         
         if color == "empty":
             messages.error(request, "لطفا یک رنگ را انتخاب کنید")
             return redirect("product:product_detail", slug=product.slug)
         
-        
+        request.session['selected_color'] = color
         
         cart = Cart(request)
         
@@ -47,6 +47,8 @@ class CartClearView(View):
         cart.clear()
         
         return redirect("cart:cart_detail")
+
+
         
 
 class OrderDetailView(View):
