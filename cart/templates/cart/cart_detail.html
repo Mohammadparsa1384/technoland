@@ -97,7 +97,17 @@
                                                 <div class="col-6 col-md-2 pl-4 pr-0 pr-md-3">
                                                     <div class="d-md-none font-weight-bold">تعداد</div>
                                                     <div class="input-group mb-3 order-number">
-                                                        <p>{{ item.quantity }}</p>
+                                                        <form method="POST" action="{% url 'cart:cart_add' item.product.id %}">
+                                                            {% csrf_token %}
+                                                            <input 
+                                                                type="number" 
+                                                                class="form-control quantity-input" 
+                                                                value="{{ item.quantity }}" 
+                                                                min="1" 
+                                                                max="10"
+                                                                name="quantity"
+                                                            >
+                                                        </form>
                                                     </div>
                                                 </div>
 

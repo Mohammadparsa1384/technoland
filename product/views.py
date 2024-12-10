@@ -2,6 +2,7 @@ from typing import Any
 from django.shortcuts import render , get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView , ListView
+from cart.cart import Cart
 from product.forms import ContactUsForm
 
 from product.models import Category, Product, CommentProduct
@@ -17,13 +18,24 @@ class IndexView(TemplateView):
     
 def detail_product(request,slug):
     product = get_object_or_404(Product,slug=slug)
+    cart = Cart(request)
+    quantity = 1
+    for key,item in cart.cart.items():
+        if item['id'] == product.id:
+            quantity = item['quantity']
+            break
     
     if request.method == "POST":
         parent_id = request.POST.get("parent_id")
         body = request.POST.get("body")
         CommentProduct.objects.create(product=product,author=request.user,body=body,parent_id=parent_id)
-        
-    return render(request,'product/product_detail.html',{'product':product})
+    
+    context = {
+        "product":product,
+        "quantity":quantity,
+
+    }   
+    return render(request,'product/product_detail.html',context)
 
         
 

@@ -18,12 +18,24 @@ class Cart:
         return result
     
     
-    def add(self,product,quantity,color):
+    def add(self,product,quantity,color, update_quantity=False):
+        
         unique = self.unique_id_generator(product.id,color)
         if unique not in self.cart:
-            self.cart[unique] = {'quantity':0, 'price': str(product.price), 'color': color,'id':product.id}
+            self.cart[unique] = {
+                'quantity':0, 
+                'price': str(product.price),
+                'color': color
+                ,'id':product.id
+            }
             
-        self.cart[unique]['quantity'] += int(quantity)
+            if update_quantity:
+                self.cart[unique]['quantity'] = int(quantity)
+
+            else:
+                self.cart[unique]['quantity'] += int(quantity)
+            
+        
         self.save()
     
     def delete(self,id):

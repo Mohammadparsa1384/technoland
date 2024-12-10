@@ -27,9 +27,11 @@ class CartAddView(View):
             messages.error(request, "لطفا یک رنگ را انتخاب کنید")
             return redirect("product:product_detail", slug=product.slug)
         
+        
+        
         cart = Cart(request)
         
-        cart.add(product,quantity,color)
+        cart.add(product,quantity,color,update_quantity=True)
         
         return redirect('cart:cart_detail')
 
