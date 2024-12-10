@@ -25,6 +25,7 @@ class CartAddView(View):
         
         if color == "empty":
             messages.error(request, "لطفا یک رنگ را انتخاب کنید")
+            return redirect("cart:cart_detail")
         
         cart = Cart(request)
         
