@@ -10,6 +10,8 @@ urlpatterns = [
     path('order/add/',views.OrderCreationView.as_view(),name="order_create"),
     path("sendrequest/<int:pk>", views.SendRequestView.as_view(), name="send_request"),
     path("verify/",views.VerifyView.as_view(),name="verify_request"),
+    path("update/<int:item_id>/", views.CartUpdateView.as_view(), name="update_qunatity")
+    
     
     
 ]

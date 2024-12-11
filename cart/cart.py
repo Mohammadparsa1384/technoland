@@ -13,7 +13,12 @@ class Cart:
         
         self.cart = cart
     
-    
+    def update_quantity(self,item_id,quantity):
+        for key, item in self.cart.items():
+            if item['id'] == item_id:  
+                self.cart[key]['quantity'] = quantity
+                break
+        self.save()  
     
     def unique_id_generator(self,id,color):
         result = f'{id}-{color}'

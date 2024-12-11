@@ -35,6 +35,16 @@ class CartAddView(View):
         
         return redirect('cart:cart_detail')
 
+class CartUpdateView(View):
+    def post(self, request, item_id):
+        cart = Cart(request)
+        quantity = int(request.POST.get('quantity', 1))
+        
+        
+        cart.update_quantity(item_id, quantity)
+        
+        return redirect("cart:cart_detail")
+
 class CartDeleteView(View):
     def get(self,request,id):
         cart = Cart(request)
