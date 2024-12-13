@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load jalali_tags %}
 {% block main %}
 <div class="container mt-5">
     <h2 class="text-center mb-4">سفارش‌های من</h2>
@@ -21,7 +22,7 @@
                     {% for order in orders %}
                     <tr>
                         <td>{{ order.id }}</td>
-                        <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>{{ order.created_at|to_jalali:'%d / %B / %y' }}</td>
                         <td>
                             {% if order.is_paid %}
                                 <span class="badge bg-success">پرداخت شده</span>

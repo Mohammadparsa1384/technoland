@@ -5,7 +5,7 @@ Django==4.2.7
 django-cleanup==8.1.0
 django-crispy-forms==2.3
 crispy-bootstrap5==2024.10
-django-jalali==6.0.1
+django-jalali-date==1.1.3
 idna==3.6
 jdatetime==4.1.1
 pillow==10.2.0
