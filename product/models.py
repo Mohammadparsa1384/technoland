@@ -79,8 +79,8 @@ class CommentProduct(models.Model):
     author = models.ForeignKey(User,related_name="comments",on_delete=models.CASCADE,verbose_name="نویسنده") 
     body = models.TextField(verbose_name="متن پیام")
     parent = models.ForeignKey("self",related_name = "replies",on_delete=models.CASCADE,blank=True, null=True)
-    created = jmodels.jDateTimeField(auto_now_add=True,null=True)
-    updated = jmodels.jDateTimeField(auto_now=True,null=True)
+    created = models.DateTimeField(auto_now_add=True,null=True)
+    updated = models.DateTimeField(auto_now=True,null=True)
     
     def __str__(self) -> str:
         return self.body[:20]

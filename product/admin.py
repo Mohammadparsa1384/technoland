@@ -10,7 +10,7 @@ class ProductAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
     list_display = ["title","price","updated","quantity"]
 
 @admin.register(models.TeamMember) 
-class TeamMemberAdmin(admin.ModelAdmin):
+class TeamMemberAdmin(ModelAdminJalaliMixin ,admin.ModelAdmin):
     list_display = ["name","job"]
     
 @admin.register(models.CommentProduct)

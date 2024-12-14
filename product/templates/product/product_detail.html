@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load jformat %}
 {% load static %}
+{% load jalali_tags %}
 {% load product_tags %}
 {% block main %}
 
@@ -178,7 +178,7 @@
                                                                                         </div>
                                                                                         <div class="col-9 col-sm-10 col-md-11 pr-0 pr-md-2 pr-xl-0 pt-0 pt-lg-1">
                                                                                             <div class="name"> {{ comment.author.email|slice:":2" }}</div>
-                                                                                            <div class="date">ارسال شده در {{ comment.updated|jformat:"%Y/%m/%d"}}</div>
+                                                                                            <div class="date">ارسال شده در {{ comment.created|to_jalali:'%Y/%m/%d'}}</div>
                                                                                         </div>
                                                                                         <div class="col-12">
                                                                                             <p>{{ comment.body }}</p>
@@ -207,7 +207,7 @@
                                                                                                     </div>
                                                                                                     <div class="col-9 col-sm-10 col-md-11 pr-0 pr-md-2 pr-xl-0 pt-0 pt-lg-1">
                                                                                                         <div class="name mx-0"> {{ reply.author.email|slice:":2" }}</div>
-                                                                                                        <div class="date">ارسال شده در {{ reply.updated|jformat:"%Y/%m/%d" }}</div>
+                                                                                                        <div class="date">ارسال شده در {{ reply.created|to_jalali:"%Y/%m/%d" }}</div>
                                                                                                     </div>
                                                                                                     <div class="col-12">
                                                                                                         <p>{{ reply.body }}</p>

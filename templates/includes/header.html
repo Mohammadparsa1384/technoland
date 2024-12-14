@@ -90,6 +90,11 @@
                                             </li>
                                             <li><a href="{% url "product:about_us" %}">درباره ما<em class="droopmenu-topanim"></em></a></li>
                                             
+                                            {% if user.is_authenticated %}
+                                            <li><a href="{% url "accounts:user-orders" %}">سفارش های من<em class="droopmenu-topanim"></em></a></li>
+                                            {% endif %}
+
+                                            
                                             <li class="droopmenu-parent" aria-haspopup="true">
                                                 <a href="{% url "product:contactus" %}" aria-expanded="false">تماس با فروشگاه<em class="droopmenu-topanim"></em></a><div class="dm-arrow"></div>
                                                 <ul style="">
@@ -114,8 +119,9 @@
                                                 <ul style="">
                                                     {% if request.user.is_authenticated %}
                                                     
-                                                    <li><a href="{% url "cart:cart_detail" %}">سبد خرید</a></li>
                                                     <li><a href="{% url "accounts:address" %}"> پروفایل کاربری </a></li>
+                                                    <li><a href="{% url "cart:cart_detail" %}">سبد خرید</a></li>
+                                                    <li><a href="{% url "accounts:user-orders" %}">سفارش های من</a></li>
                                                     <li><a href="{% url "accounts:password_change" %}">تغییر رمز عبور</a></li>
                                                     <li><a href="#">{{request.user.email|sep_email}} </a></li>
                                                     <li><a href="{% url "accounts:logout" %}"> خروج از حساب </a></li>
