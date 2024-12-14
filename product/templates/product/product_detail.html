@@ -180,10 +180,37 @@
                                                                                             <div class="name"> {{ comment.author.email|slice:":2" }}</div>
                                                                                             <div class="date">ارسال شده در {{ comment.created|to_jalali:'%Y/%m/%d'}}</div>
                                                                                         </div>
-                                                                                        <div class="col-12">
-                                                                                            <p>{{ comment.body }}</p>
-                                                                                            <span onclick="set_id({{comment.id}})" class="reply"><img src="{% static "images/comment-reply.png" %}" alt=""> ارسال پاسخ</span>
+
+                                                                                        <div class="col-12 d-flex justify-content-between align-items-center">
+                                                                                            <!-- Left Content: Comment and Reply -->
+                                                                                            <div class="d-flex align-items-center">
+                                                                                                <p class="mb-0">{{ comment.body }}</p>
+                                                                                                <button onclick="set_id({{ comment.id }})" class="btn btn-sm  reply ms-2">
+                                                                                                    <img src="{% static 'images/comment-reply.png' %}" alt=""> ارسال پاسخ
+                                                                                                </button>
+                                                                                            </div>
+                                                                                            
+                                                                                            {% if request.user == comment.author %}
+                                                                                            
+                                                                                            <div class="d-flex">
+                                                                                                <!-- Edit Button -->
+                                                                                                <button onclick="editComment({{ comment.id }})" class="btn btn-sm btn-outline-secondary edit">
+                                                                                                    <i class="fas fa-pencil-alt"></i> ویرایش
+                                                                                                </button>
+                                                                                                
+                                                                                                <!-- Delete Button -->
+                                                                                                <button onclick="deleteComment({{ comment.id }})" class="btn btn-sm btn-outline-danger delete ms-2">
+                                                                                                    <i class="fas fa-trash"></i> حذف
+                                                                                                </button>
+                                                                                            </div>
+
+                                                                                            {% endif %}
+                                                                                            
+
+                                                                                            
                                                                                         </div>
+                                                                                        
+
                                                                                     </div>
                                                                                 </div>
                                                                                 {% endif %}
@@ -209,9 +236,27 @@
                                                                                                         <div class="name mx-0"> {{ reply.author.email|slice:":2" }}</div>
                                                                                                         <div class="date">ارسال شده در {{ reply.created|to_jalali:"%Y/%m/%d" }}</div>
                                                                                                     </div>
+                                                                                                    
+                                                                                                    {% if request.user == reply.author %}
+                                                                                                    <div class="d-flex justify-content-end">
+                                                                                                        <!-- Edit Button -->
+                                                                                                        <button onclick="editComment({{ comment.id }})" class="btn btn-sm btn-outline-secondary edit">
+                                                                                                            <i class="fas fa-pencil-alt"></i> ویرایش
+                                                                                                        </button>
+                                                                                                        
+                                                                                                        <!-- Delete Button -->
+                                                                                                        <button onclick="deleteComment({{ comment.id }})" class="btn btn-sm btn-outline-danger delete ms-2">
+                                                                                                            <i class="fas fa-trash"></i> حذف
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                    {% endif %}
+                                                                                                    
+        
+
                                                                                                     <div class="col-12">
                                                                                                         <p>{{ reply.body }}</p>
                                                                                                     </div>
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
