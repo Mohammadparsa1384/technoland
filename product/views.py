@@ -15,38 +15,44 @@ class IndexView(TemplateView):
         context["products"] = Product.objects.all()
         return context
 
-    
-def detail_product(request,slug):
-    product = get_object_or_404(Product,slug=slug)
+def detail_product(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     cart = Cart(request)
     quantity = 1
     selected_color = None
-    for key,item in cart.cart.items():
+    for key, item in cart.cart.items():
         if item['id'] == product.id:
             quantity = item['quantity']
             selected_color = item['color']
             break
     
-    # selected_color = request.session.get("selected_color", None)
-    
     if request.method == "POST":
-        color = request.POST.get("color")
-        quantity = int(request.POST.get("quantity" , 1))
         
-        if color:
-            request.session['selected_color'] = color
-        
-        parent_id = request.POST.get("parent_id")
-        body = request.POST.get("body")
-        CommentProduct.objects.create(product=product,author=request.user,body=body,parent_id=parent_id)
+        if "edit_comment_id" in request.POST:
+            comment_id = request.POST.get("edit_comment_id")
+            body = request.POST.get("body")
+            comment = get_object_or_404(CommentProduct, id=comment_id, author=request.user)
+            comment.body = body
+            comment.save()
+        else:
+            
+            color = request.POST.get("color")
+            quantity = int(request.POST.get("quantity", 1))
+            if color:
+                request.session['selected_color'] = color
+            parent_id = request.POST.get("parent_id")
+            body = request.POST.get("body")
+            CommentProduct.objects.create(product=product, author=request.user, body=body, parent_id=parent_id)
     
-    context = {
-        "product":product,
-        "quantity":quantity,
-        "selected_color": selected_color,
+    comments = CommentProduct.objects.filter(product=product)
 
-    }   
-    return render(request,'product/product_detail.html',context)
+    context = {
+        "product": product,
+        "quantity": quantity,
+        "selected_color": selected_color,
+        "comments": comments,
+    }
+    return render(request, 'product/product_detail.html', context)
 
    
 

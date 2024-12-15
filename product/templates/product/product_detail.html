@@ -184,7 +184,7 @@
                                                                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                                                                             <!-- Left Content: Comment and Reply -->
                                                                                             <div class="d-flex align-items-center">
-                                                                                                <p class="mb-0">{{ comment.body }}</p>
+                                                                                                <p id="comment-body-{{ comment.id }}" class="mb-0">{{ comment.body }}</p>
                                                                                                 <button onclick="set_id({{ comment.id }})" class="btn btn-sm  reply ms-2">
                                                                                                     <img src="{% static 'images/comment-reply.png' %}" alt=""> ارسال پاسخ
                                                                                                 </button>
@@ -194,9 +194,11 @@
                                                                                             
                                                                                             <div class="d-flex">
                                                                                                 <!-- Edit Button -->
-                                                                                                <button onclick="editComment({{ comment.id }})" class="btn btn-sm btn-outline-secondary edit">
-                                                                                                    <i class="fas fa-pencil-alt"></i> ویرایش
-                                                                                                </button>
+                                                                                            <button 
+                                                                                                onclick="editComment('{{ comment.id }}', '{{ comment.body }}')" 
+                                                                                                class="btn btn-sm btn-outline-secondary edit">
+                                                                                                <i class="fas fa-pencil-alt"></i> ویرایش
+                                                                                            </button>
                                                                                                 
                                                                                                 <!-- Delete Button -->
                                                                                                 <button onclick="deleteComment({{ comment.id }})" class="btn btn-sm btn-outline-danger delete ms-2">
@@ -240,7 +242,7 @@
                                                                                                     {% if request.user == reply.author %}
                                                                                                     <div class="d-flex justify-content-end">
                                                                                                         <!-- Edit Button -->
-                                                                                                        <button onclick="editComment({{ comment.id }})" class="btn btn-sm btn-outline-secondary edit">
+                                                                                                        <button id="edit-comment-id" onclick="editComment({{ reply.id }}, '{{ reply.body }}')" class="btn btn-sm btn-outline-secondary edit">
                                                                                                             <i class="fas fa-pencil-alt"></i> ویرایش
                                                                                                         </button>
                                                                                                         
@@ -306,12 +308,13 @@
                                                                                         <div class="form-group my-1">
                                                                                             
                                                                                             <input class="parent_id" type="hidden" name="parent_id">
+                                                                                             <input type="hidden" id="edit_comment_id" name="edit_comment_id" value="">
                                                                                             <textarea name="body" class="form-control" id="body" rows="4" placeholder="متن دیدگاه" required></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-12">
                                                                                         <div class="form-group my-1">
-                                                                                            <input type="submit" value="ارسال دیدگاه" class="btn btn-success px-5">
+                                                                                            <input id="submit_comment_form" type="submit" value="ارسال دیدگاه" class="btn btn-success px-5">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -360,6 +363,17 @@
         document.getElementById("custom-alert").style.display = "none";
         document.getElementById("btn_close").style.display = "none";
 
+    }
+
+    function editComment(commentId, commentBody){
+        const submitCommenBtn = document.getElementById("submit_comment_form")
+        submitCommenBtn.value = "ویرایش دیدگاه"
+
+        const textBox = document.getElementById("body")
+        textBox.value = commentBody;
+
+        const commentIdField = document.getElementById("edit_comment_id");
+        commentIdField.value = commentId;
     }
 </script>
 
