@@ -1,4 +1,5 @@
 from typing import Any
+from django.http import HttpResponse
 from django.shortcuts import redirect, render , get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView , ListView
@@ -14,7 +15,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["products"] = Product.objects.all()
         return context
-
+    
 def detail_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     cart = Cart(request)
@@ -25,25 +26,34 @@ def detail_product(request, slug):
             quantity = item['quantity']
             selected_color = item['color']
             break
-    
+
+
     if request.method == "POST":
+        body = request.POST.get("body")
+        parent_id = request.POST.get("parent_id")
+
+       
+        if body and not request.POST.get("edit_comment_id"): 
+         
+            if parent_id:
+                CommentProduct.objects.create(product=product, author=request.user, body=body, parent_id=parent_id)
+            else:
+                
+                CommentProduct.objects.create(product=product, author=request.user, body=body)
+
         
-        if "edit_comment_id" in request.POST:
+        elif "edit_comment_id" in request.POST:
             comment_id = request.POST.get("edit_comment_id")
-            body = request.POST.get("body")
+            if body:  
+                comment = get_object_or_404(CommentProduct, id=comment_id, author=request.user)
+                comment.body = body
+                comment.save()
+
+        elif "delete_comment_id" in request.POST:
+            comment_id = request.POST.get("delete_comment_id")
             comment = get_object_or_404(CommentProduct, id=comment_id, author=request.user)
-            comment.body = body
-            comment.save()
-        else:
-            
-            color = request.POST.get("color")
-            quantity = int(request.POST.get("quantity", 1))
-            if color:
-                request.session['selected_color'] = color
-            parent_id = request.POST.get("parent_id")
-            body = request.POST.get("body")
-            CommentProduct.objects.create(product=product, author=request.user, body=body, parent_id=parent_id)
-    
+            comment.delete()
+
     comments = CommentProduct.objects.filter(product=product)
 
     context = {
@@ -54,7 +64,6 @@ def detail_product(request, slug):
     }
     return render(request, 'product/product_detail.html', context)
 
-   
 
 class SearchProduct(View):
     def get(self,request):
