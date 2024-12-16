@@ -77,7 +77,7 @@ class Cart:
     
     def total_price(self):
         cart = self.cart.values()
-        print(cart)
+       
         total = sum([int(item['price']) * int(item['quantity']) for item in cart])
         return total
         

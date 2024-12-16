@@ -102,6 +102,7 @@
                                                             <input 
                                                                 type="number" 
                                                                 class="form-control quantity-input" 
+                                                                id="quantity-{{ item.id }}"
                                                                 value="{{ item.quantity }}" 
                                                                 min="1" 
                                                                 max="10"
@@ -193,5 +194,34 @@
         </div>
     </div>
 </section>
+
+<script>
+    function updateCartItem(itemId, quantity) {
+    
+    $.ajax({
+        url: `/cart/update/${itemId}/`,
+        method: 'POST',
+        data: {
+            quantity: quantity,
+            csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+        },
+        success: function(response) {
+            if (response.success) {
+                
+                $(`#item-total-${itemId}`).text(response.item_total_price.toFixed(2));
+                
+                
+                $('#cart-total').text(response.cart_total_price.toFixed(2));
+            } else {
+                alert('Failed to update cart: ' + response.error);
+            }
+        },
+        error: function() {
+            alert('Error while updating the cart.');
+        }
+    });
+}
+
+</script>
 
 {% endblock main %}
