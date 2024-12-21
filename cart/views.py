@@ -129,6 +129,7 @@ class SendRequestView(View):
             print(res.json()['errors'])
             return HttpResponse(str(res.json()['errors']))
 
+
 class VerifyView(View):
    def get(self,request):
        authority = request.GET.get("Authority")
