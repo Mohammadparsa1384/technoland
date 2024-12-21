@@ -1,0 +1,17 @@
+{
+    "disks":[
+        {
+            "name":"data",
+            "mountTo":"data"
+        },
+        {
+            "name":"media",
+            "mountTo":"media"
+        }
+    ],
+
+    "django": {
+        "settingsFile": "technoland/settings.py"
+      }
+    
+}
