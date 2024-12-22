@@ -13,7 +13,7 @@ class IndexView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["products"] = Product.objects.all()
+        context["products"] = Product.objects.all().prefetch_related('category', 'colors')
         return context
     
 def detail_product(request, slug):

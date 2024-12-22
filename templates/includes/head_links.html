@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <!-- CSS Styles -->
+     {% load compress %}
+
+     {% compress css %}
+
     <link rel="stylesheet" href="{% static "css/bootstrap.rtl.min.css" %}">
     <link rel="stylesheet" href="{% static "plugins/fontawesome/css/all.min.css" %}">
     <link rel="stylesheet" href="{% static "plugins/aos-master/dist/aos.css" %}">
@@ -23,4 +27,5 @@
 
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <!-- /CSS Styles -->
+    {% endcompress %}
 </head>

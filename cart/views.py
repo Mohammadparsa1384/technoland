@@ -97,7 +97,7 @@ amount = 1000  # Rial / Required
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
 phone = 'YOUR_PHONE_NUMBER'  # Optional
 # Important: need to edit for realy server.
-CallbackURL = 'http://127.0.0.1:8000/cart/verify/'
+CallbackURL = 'https://technoland.liara.run/cart/verify/'
 
 class SendRequestView(View):
     def post(self,request,pk):

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'jalali_date',
     "crispy_forms",
     "crispy_bootstrap5",
+    'compressor',
     
 ]
 
@@ -141,6 +142,20 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+
+COMPRESS_CSS_HASHING_METHOD = 'content'
+COMPRESS_JS_HASHING_METHOD = 'content'
+
+STATICFILES_FINDERS = [
+    
+    'compressor.finders.CompressorFinder',  
+]
 
 STATICFILES_DIRS = [
     BASE_DIR / 'assets'
